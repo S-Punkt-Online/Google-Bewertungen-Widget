@@ -1,0 +1,17 @@
+{
+  "name": "contao-google-reviews-widget",
+  "version": "1.0.0",
+  "description": "",
+  "main": "index.js",
+  "scripts": {
+    "build-css": "sass assets/scss/google-reviews-widget.scss public/css/google-reviews-widget.css --style=compressed",
+    "watch-css": "sass --watch assets/scss/google-reviews-widget.scss:public/css/google-reviews-widget.css"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "type": "commonjs",
+  "devDependencies": {
+    "sass": "^1.99.0"
+  }
+}

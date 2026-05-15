@@ -1,0 +1,17 @@
+{
+  "name": "bairamov-weba11y/contao-google-reviews-widget",
+  "description": "Google Reviews Widget for Contao",
+  "type": "contao-bundle",
+  "license": "proprietary",
+  "require": {
+    "php": "^8.1"
+  },
+  "autoload": {
+    "psr-4": {
+      "BairamovWeba11y\\ContaoGoogleReviewsWidget\\": "src/"
+    }
+  },
+  "extra": {
+    "contao-manager-plugin": "BairamovWeba11y\\ContaoGoogleReviewsWidget\\ContaoManager\\Plugin"
+  }
+}

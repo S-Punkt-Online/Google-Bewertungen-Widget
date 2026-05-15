@@ -1,0 +1,9 @@
+services:
+  _defaults:
+    autowire: true
+    autoconfigure: true
+
+  BairamovWeba11y\ContaoGoogleReviewsWidget\:
+    resource: '../src/'
+    exclude:
+      - '../src/Resources/'
