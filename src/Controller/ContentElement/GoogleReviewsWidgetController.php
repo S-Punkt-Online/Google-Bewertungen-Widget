@@ -1,8 +1,8 @@
 <?php
 
-namespace BairamovWeba11y\ContaoGoogleReviewsWidget\Controller\ContentElement;
+namespace SPunktOnline\ContaoGoogleReviewsWidget\Controller\ContentElement;
 
-use BairamovWeba11y\ContaoGoogleReviewsWidget\Service\GoogleReviewsService;
+use SPunktOnline\ContaoGoogleReviewsWidget\Service\GoogleReviewsService;
 use Contao\ContentModel;
 use Contao\CoreBundle\Controller\ContentElement\AbstractContentElementController;
 use Contao\CoreBundle\DependencyInjection\Attribute\AsContentElement;

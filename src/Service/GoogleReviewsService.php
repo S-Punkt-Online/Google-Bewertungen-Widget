@@ -1,6 +1,6 @@
 <?php
 
-namespace BairamovWeba11y\ContaoGoogleReviewsWidget\Service;
+namespace SPunktOnline\ContaoGoogleReviewsWidget\Service;
 
 class GoogleReviewsService
 {

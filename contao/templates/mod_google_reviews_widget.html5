@@ -1,0 +1,61 @@
+<?php if ((int) $this->userRatingsTotal > 0): ?>
+  <div class="rsce_google_review" itemscope itemtype="https://schema.org/LocalBusiness">
+
+    <meta itemprop="name" content="<?= $this->businessName ?>">
+    <link itemprop="url" href="<?= $this->businessUrl ?>">
+
+    <button class="rsce_google_review__close" type="button">
+      <span class="icon-close">
+        <svg xmlns="http://www.w3.org/2000/svg" height="24px" viewBox="0 -960 960 960" width="24px"
+             fill="#ffffff"><path d="m256-200-56-56 224-224-224-224 56-56 224 224 224-224 56 56-224 224 224 224-56 56-224-224-224 224Z"/></svg>
+      </span>
+
+      <span class="icon-google" hidden>
+        <svg width="24" height="24" fill="#fff" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512"><!--!Font Awesome
+Free v7.2
+.0 by
+@fontawesome -
+https://fontawesome.com License - https://fontawesome.com/license/free Copyright 2026 Fonticons, Inc.--><path d="M500 261.8C500 403.3 403.1 504 260 504 122.8 504 12 393.2 12 256S122.8 8 260 8c66.8 0 123 24.5 166.3 64.9l-67.5 64.9c-88.3-85.2-252.5-21.2-252.5 118.2 0 86.5 69.1 156.6 153.7 156.6 98.2 0 135-70.4 140.8-106.9l-140.8 0 0-85.3 236.1 0c2.3 12.7 3.9 24.9 3.9 41.4z"/></svg>
+      </span>
+    </button>
+
+    <div class="rsce_google_review__content">
+      <div class="rsce_google_review__wrapper">
+        <img
+          src="/bundles/contaogooglereviewswidget/images/google-logo.svg"
+          alt="Google Logo"
+          title="Google Logo">
+
+        <div class="rsce_google_review__container">
+          <p class="rsce_google_review__title">Google Bewertung</p>
+
+          <p class="rsce_google_review__rating">
+            <span><?= $this->formattedRating ?></span>
+            <span><?= str_repeat('<span class="star">&#9733;</span>', (int) $this->starCount) ?></span>
+          </p>
+
+          <p class="rsce_google_review__text">
+            Basierend auf <?= (int) $this->userRatingsTotal ?> Bewertungen!
+          </p>
+        </div>
+      </div>
+
+      <?php if ($this->googleReviewUrl): ?>
+        <a href="<?= $this->googleReviewUrl ?>"
+           target="_blank"
+           rel="noopener"
+           class="rsce_google_review__button"
+           aria-label="Alle Google-Bewertungen ansehen">
+          <span>Alle Bewertungen anzeigen</span>
+        </a>
+      <?php endif; ?>
+    </div>
+
+    <div itemprop="aggregateRating" itemscope itemtype="https://schema.org/AggregateRating" hidden>
+      <meta itemprop="ratingValue" content="<?= $this->formattedRating ?>">
+      <meta itemprop="reviewCount" content="<?= (int) $this->userRatingsTotal ?>">
+      <meta itemprop="bestRating" content="5">
+      <meta itemprop="worstRating" content="1">
+    </div>
+  </div>
+<?php endif; ?>

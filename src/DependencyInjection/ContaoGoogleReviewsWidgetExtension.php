@@ -1,6 +1,6 @@
 <?php
 
-namespace BairamovWeba11y\ContaoGoogleReviewsWidget\DependencyInjection;
+namespace SPunktOnline\ContaoGoogleReviewsWidget\DependencyInjection;
 
 use Symfony\Component\Config\FileLocator;
 use Symfony\Component\DependencyInjection\ContainerBuilder;

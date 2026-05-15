@@ -1,12 +1,12 @@
 <?php
 
-namespace BairamovWeba11y\ContaoGoogleReviewsWidget\ContaoManager;
+namespace SPunktOnline\ContaoGoogleReviewsWidget\ContaoManager;
 
-use BairamovWeba11y\ContaoGoogleReviewsWidget\ContaoGoogleReviewsWidgetBundle;
 use Contao\CoreBundle\ContaoCoreBundle;
 use Contao\ManagerPlugin\Bundle\BundlePluginInterface;
 use Contao\ManagerPlugin\Bundle\Config\BundleConfig;
 use Contao\ManagerPlugin\Bundle\Parser\ParserInterface;
+use SPunktOnline\ContaoGoogleReviewsWidget\ContaoGoogleReviewsWidgetBundle;
 
 class Plugin implements BundlePluginInterface
 {

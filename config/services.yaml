@@ -3,7 +3,7 @@ services:
     autowire: true
     autoconfigure: true
 
-  BairamovWeba11y\ContaoGoogleReviewsWidget\:
+  SPunktOnline\ContaoGoogleReviewsWidget\:
     resource: '../src/'
     exclude:
       - '../src/Resources/'

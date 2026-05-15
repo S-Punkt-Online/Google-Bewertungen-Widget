@@ -1,6 +1,6 @@
 <?php
 
-namespace BairamovWeba11y\ContaoGoogleReviewsWidget;
+namespace SPunktOnline\ContaoGoogleReviewsWidget;
 
 use Symfony\Component\HttpKernel\Bundle\Bundle;
 

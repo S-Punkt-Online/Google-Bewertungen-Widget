@@ -1,3 +1,4 @@
+![Google Reviews Widget](https://raw.githubusercontent.com/S-Punkt-Online/Google-Bewertungen-Widget/main/public/images/logo.png)
 Contao Google Reviews Widget
 Installation
 Verwendung
