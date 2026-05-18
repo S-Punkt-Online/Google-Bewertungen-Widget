@@ -59,6 +59,11 @@ class GoogleReviewsService
       !isset($data['result']['rating']) ||
       !isset($data['result']['user_ratings_total'])
     ) {
+      file_put_contents(
+        $_SERVER['DOCUMENT_ROOT'] . '/files/google-review-cache/google-api-debug.json',
+        json_encode($data, JSON_PRETTY_PRINT | JSON_UNESCAPED_UNICODE)
+      );
+
       return null;
     }
 
