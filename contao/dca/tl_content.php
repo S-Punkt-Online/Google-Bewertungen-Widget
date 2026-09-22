@@ -3,6 +3,7 @@
 $GLOBALS['TL_DCA']['tl_content']['palettes']['google_reviews_widget'] =
   '{type_legend},type,headline;' .
   '{google_reviews_legend},google_api_key,google_place_id,google_business_name,google_business_url,google_review_url;' .
+  '{google_appearance_legend},google_position,google_color;' .
   '{template_legend:hide},customTpl;' .
   '{protected_legend:hide},protected;' .
   '{expert_legend:hide},cssID;' .
@@ -41,4 +42,20 @@ $GLOBALS['TL_DCA']['tl_content']['fields']['google_review_url'] = [
   'inputType' => 'text',
   'eval' => ['tl_class' => 'long clr', 'rgxp' => 'url', 'decodeEntities' => true],
   'sql' => "varchar(500) NOT NULL default ''",
+];
+
+$GLOBALS['TL_DCA']['tl_content']['fields']['google_position'] = [
+  'exclude' => true,
+  'inputType' => 'select',
+  'options' => ['bottom-left', 'bottom-right'],
+  'reference' => &$GLOBALS['TL_LANG']['tl_content']['google_position_options'],
+  'eval' => ['tl_class' => 'w50', 'includeBlankOption' => false],
+  'sql' => "varchar(32) NOT NULL default 'bottom-left'",
+];
+
+$GLOBALS['TL_DCA']['tl_content']['fields']['google_color'] = [
+  'exclude' => true,
+  'inputType' => 'text',
+  'eval' => ['tl_class' => 'w50', 'colorpicker' => true, 'isHexColor' => true, 'maxlength' => 6, 'decodeEntities' => true],
+  'sql' => "varchar(6) NOT NULL default ''",
 ];

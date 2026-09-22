@@ -31,3 +31,20 @@ $GLOBALS['TL_LANG']['tl_module']['google_review_url'] = [
     'Google Bewertungslink',
     'Link zu den Google-Bewertungen.',
 ];
+
+$GLOBALS['TL_LANG']['tl_module']['google_appearance_legend'] = 'Darstellung';
+
+$GLOBALS['TL_LANG']['tl_module']['google_position'] = [
+    'Position',
+    'Position des Widgets auf der Seite.',
+];
+
+$GLOBALS['TL_LANG']['tl_module']['google_position_options'] = [
+    'bottom-left' => 'Unten links',
+    'bottom-right' => 'Unten rechts',
+];
+
+$GLOBALS['TL_LANG']['tl_module']['google_color'] = [
+    'Akzentfarbe',
+    'Farbe für Rahmen, Sterne und Button. Leer lassen für die Standardfarbe.',
+];

@@ -1,5 +1,7 @@
 <?php if ((int) $this->userRatingsTotal > 0): ?>
-  <div class="rsce_google_review" itemscope itemtype="https://schema.org/LocalBusiness">
+  <div class="rsce_google_review<?= $this->positionClass ? ' ' . $this->positionClass : '' ?>"
+       itemscope itemtype="https://schema.org/LocalBusiness"
+       <?php if ($this->accentColor): ?>style="--google-review-color: <?= htmlspecialchars((string) $this->accentColor, ENT_QUOTES) ?>"<?php endif; ?>>
 
     <meta itemprop="name" content="<?= htmlspecialchars((string) $this->businessName, ENT_QUOTES) ?>">
     <link itemprop="url" href="<?= htmlspecialchars((string) $this->businessUrl, ENT_QUOTES) ?>">

@@ -47,6 +47,9 @@ class GoogleReviewsWidgetController extends AbstractContentElementController
         $template->businessUrl = $model->google_business_url;
         $template->googleReviewUrl = $model->google_review_url;
 
+        $template->positionClass = 'bottom-right' === $model->google_position ? 'rsce_google_review--right' : '';
+        $template->accentColor = $model->google_color ? '#'.ltrim((string) $model->google_color, '#') : null;
+
         return $template->getResponse();
     }
 }

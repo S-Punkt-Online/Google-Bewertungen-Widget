@@ -200,6 +200,18 @@ Direct link to Google reviews.
 
 ---
 
+## Position
+
+Where the widget is shown on the page: bottom left (default) or bottom right.
+
+---
+
+## Accent Color
+
+Color used for the border, stars and button. Leave empty for the default color.
+
+---
+
 # Cache
 
 Google API responses are stored locally.

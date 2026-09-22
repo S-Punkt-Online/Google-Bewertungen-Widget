@@ -1,3 +1,7 @@
+:root {
+	--google-review-color: #005cb9;
+}
+
 .rsce_google_review {
 	cursor: pointer;
 	position: fixed;
@@ -13,11 +17,28 @@
 		padding: 5px;
 	}
 
+	&--right {
+		left: auto;
+		right: 0;
+
+		.rsce_google_review__content {
+			border-right: none;
+			border-left: 1px solid var(--google-review-color);
+		}
+
+		.rsce_google_review__close {
+			left: auto;
+			right: calc( 100% + 5px );
+			margin-right: 0;
+			margin-left: 15px;
+		}
+	}
+
 	&__content {
 		padding: 10px;
-		border-top: 1px solid #005cb9;
-		border-right: 1px solid #005cb9;
-		border-bottom: 1px solid #005cb9;
+		border-top: 1px solid var(--google-review-color);
+		border-right: 1px solid var(--google-review-color);
+		border-bottom: 1px solid var(--google-review-color);
 		background-color: #ffffff;
 	}
 
@@ -30,7 +51,7 @@
 		background: none;
 		border: 1px solid #ffffff4d;
 		border-radius: 50%;
-		background: #005cb9;
+		background: var(--google-review-color);
 		width: 45px;
 		height: 45px;
 		display: flex;
@@ -97,7 +118,7 @@
 					padding-right: 10px;
 					font-size: 16px;
 					font-weight: 700;
-					color: #005cb9;
+					color: var(--google-review-color);
 					@media (max-width: 1200px) {
 						margin-bottom: 5px;
 						padding-right: 0;
@@ -131,10 +152,10 @@
 			width: fit-content;
 			padding: 5px 10px;
 			text-decoration: none;
-			border: 1px solid #005cb9;
+			border: 1px solid var(--google-review-color);
 			border-radius: 15px;
 			line-height: 1;
-			color: #005cb9 !important;
+			color: var(--google-review-color) !important;
 			transition-duration: .3s;
 			&:hover {
 				color: #000000 !important;
@@ -161,3 +182,10 @@
 	}
 }
 
+.rsce_google_review--right.google_hidden {
+	transform: translateX(100%);
+	.rsce_google_review__close {
+		left: auto;
+		right: calc( 100% + 15px );
+	}
+}
