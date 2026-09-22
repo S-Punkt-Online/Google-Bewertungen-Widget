@@ -18,7 +18,7 @@ $GLOBALS['TL_DCA']['tl_content']['fields']['google_api_key'] = [
 $GLOBALS['TL_DCA']['tl_content']['fields']['google_place_id'] = [
   'exclude' => true,
   'inputType' => 'text',
-  'eval' => ['tl_class' => 'w50', 'mandatory' => false],
+  'eval' => ['tl_class' => 'w50', 'mandatory' => true],
   'sql' => "varchar(255) NOT NULL default ''",
 ];
 

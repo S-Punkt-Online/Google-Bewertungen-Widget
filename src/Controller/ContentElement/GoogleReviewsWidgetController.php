@@ -1,51 +1,52 @@
 <?php
 
+declare(strict_types=1);
+
 namespace SPunktOnline\ContaoGoogleReviewsWidget\Controller\ContentElement;
 
-use SPunktOnline\ContaoGoogleReviewsWidget\Service\GoogleReviewsService;
 use Contao\ContentModel;
 use Contao\CoreBundle\Controller\ContentElement\AbstractContentElementController;
 use Contao\CoreBundle\DependencyInjection\Attribute\AsContentElement;
 use Contao\Template;
+use SPunktOnline\ContaoGoogleReviewsWidget\Service\GoogleReviewsService;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 
 #[AsContentElement(
-  type: 'google_reviews_widget',
-  category: 'includes',
-  template: 'ce_google_reviews_widget'
+    type: 'google_reviews_widget',
+    category: 'includes',
+    template: 'ce_google_reviews_widget',
 )]
 class GoogleReviewsWidgetController extends AbstractContentElementController
 {
-  public function __construct(
-    private readonly GoogleReviewsService $googleReviewsService
-  ) {
-  }
+    public function __construct(private readonly GoogleReviewsService $googleReviewsService)
+    {
+    }
 
-  protected function getResponse(Template $template, ContentModel $model, Request $request): Response
-  {
-    $GLOBALS['TL_CSS'][] = 'bundles/contaogooglereviewswidget/css/google-reviews-widget.css|static';
+    protected function getResponse(Template $template, ContentModel $model, Request $request): Response
+    {
+        $GLOBALS['TL_CSS'][] = 'bundles/contaogooglereviewswidget/css/google-reviews-widget.css|static';
 
-    $GLOBALS['TL_JAVASCRIPT'][] = 'bundles/contaogooglereviewswidget/js/google-reviews-widget.js|static';
+        $GLOBALS['TL_JAVASCRIPT'][] = 'bundles/contaogooglereviewswidget/js/google-reviews-widget.js|static';
 
-    $reviews = $this->googleReviewsService->getReviews(
-      $model->google_api_key,
-      $model->google_place_id
-    );
+        $reviews = $this->googleReviewsService->getReviews(
+            $model->google_api_key,
+            $model->google_place_id,
+        );
 
-    $formattedRating = $reviews['formatted_rating'] ?? '0.0';
+        $formattedRating = $reviews['formatted_rating'] ?? '0.0';
 
-    $template->formattedRating = $formattedRating;
-    $template->userRatingsTotal = $reviews['user_ratings_total'] ?? 0;
+        $template->formattedRating = $formattedRating;
+        $template->userRatingsTotal = $reviews['user_ratings_total'] ?? 0;
 
-    $template->starCount = round(
-      (float) str_replace(',', '.', $formattedRating)
-    );
+        $template->starCount = round(
+            (float) str_replace(',', '.', $formattedRating),
+        );
 
-    $template->businessName = $model->google_business_name;
-    $template->businessUrl = $model->google_business_url;
-    $template->googleReviewUrl = $model->google_review_url;
+        $template->businessName = $model->google_business_name;
+        $template->businessUrl = $model->google_business_url;
+        $template->googleReviewUrl = $model->google_review_url;
 
-    return $template->getResponse();
-  }
+        return $template->getResponse();
+    }
 }

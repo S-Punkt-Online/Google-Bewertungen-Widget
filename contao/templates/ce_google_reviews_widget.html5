@@ -1,8 +1,8 @@
 <?php if ((int) $this->userRatingsTotal > 0): ?>
   <div class="rsce_google_review" itemscope itemtype="https://schema.org/LocalBusiness">
 
-    <meta itemprop="name" content="<?= $this->businessName ?>">
-    <link itemprop="url" href="<?= $this->businessUrl ?>">
+    <meta itemprop="name" content="<?= htmlspecialchars((string) $this->businessName, ENT_QUOTES) ?>">
+    <link itemprop="url" href="<?= htmlspecialchars((string) $this->businessUrl, ENT_QUOTES) ?>">
 
     <button class="rsce_google_review__close" type="button">
       <span class="icon-close">
@@ -41,7 +41,7 @@ https://fontawesome.com License - https://fontawesome.com/license/free Copyright
       </div>
 
       <?php if ($this->googleReviewUrl): ?>
-        <a href="<?= $this->googleReviewUrl ?>"
+        <a href="<?= htmlspecialchars((string) $this->googleReviewUrl, ENT_QUOTES) ?>"
            target="_blank"
            rel="noopener"
            class="rsce_google_review__button"

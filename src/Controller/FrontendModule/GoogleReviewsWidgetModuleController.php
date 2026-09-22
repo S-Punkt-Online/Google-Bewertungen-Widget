@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 namespace SPunktOnline\ContaoGoogleReviewsWidget\Controller\FrontendModule;
 
 use Contao\CoreBundle\Controller\FrontendModule\AbstractFrontendModuleController;
@@ -13,13 +15,12 @@ use Symfony\Component\HttpFoundation\Response;
 #[AsFrontendModule(
     type: 'google_reviews_widget',
     category: 'miscellaneous',
-    template: 'mod_google_reviews_widget'
+    template: 'mod_google_reviews_widget',
 )]
 class GoogleReviewsWidgetModuleController extends AbstractFrontendModuleController
 {
-    public function __construct(
-        private readonly GoogleReviewsService $googleReviewsService
-    ) {
+    public function __construct(private readonly GoogleReviewsService $googleReviewsService)
+    {
     }
 
     protected function getResponse(Template $template, ModuleModel $model, Request $request): Response
@@ -29,7 +30,7 @@ class GoogleReviewsWidgetModuleController extends AbstractFrontendModuleControll
 
         $reviews = $this->googleReviewsService->getReviews(
             $model->google_api_key,
-            $model->google_place_id
+            $model->google_place_id,
         );
 
         $formattedRating = $reviews['formatted_rating'] ?? '0.0';

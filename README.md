@@ -207,7 +207,7 @@ Google API responses are stored locally.
 Path:
 
 ```text
-public/files/google-review-cache/
+var/cache/contao-google-reviews-widget/
 ```
 
 Benefits:

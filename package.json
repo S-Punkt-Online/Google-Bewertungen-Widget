@@ -5,7 +5,9 @@
   "main": "index.js",
   "scripts": {
     "build-css": "sass assets/scss/google-reviews-widget.scss public/css/google-reviews-widget.css --style=compressed",
-    "watch-css": "sass --watch assets/scss/google-reviews-widget.scss:public/css/google-reviews-widget.css"
+    "watch-css": "sass --watch assets/scss/google-reviews-widget.scss:public/css/google-reviews-widget.css",
+    "build-js": "node -e \"require('fs').copyFileSync('assets/js/google-reviews-widget.js', 'public/js/google-reviews-widget.js')\"",
+    "build": "npm run build-css && npm run build-js"
   },
   "keywords": [],
   "author": "",

@@ -22,7 +22,9 @@
   "require": {
     "php": "^8.1",
     "contao/core-bundle": "^5.3",
-    "contao/manager-plugin": "^2.13"
+    "contao/manager-plugin": "^2.13",
+    "psr/log": "^3.0",
+    "symfony/http-client-contracts": "^3.0"
   },
 
   "autoload": {

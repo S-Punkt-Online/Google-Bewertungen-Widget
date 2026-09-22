@@ -2,6 +2,8 @@ services:
   _defaults:
     autowire: true
     autoconfigure: true
+    bind:
+      $cacheDir: '%kernel.project_dir%/var/cache/contao-google-reviews-widget'
 
   SPunktOnline\ContaoGoogleReviewsWidget\:
     resource: '../src/'

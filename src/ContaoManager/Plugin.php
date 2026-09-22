@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 namespace SPunktOnline\ContaoGoogleReviewsWidget\ContaoManager;
 
 use Contao\CoreBundle\ContaoCoreBundle;
@@ -10,11 +12,11 @@ use SPunktOnline\ContaoGoogleReviewsWidget\ContaoGoogleReviewsWidgetBundle;
 
 class Plugin implements BundlePluginInterface
 {
-  public function getBundles(ParserInterface $parser): array
-  {
-    return [
-      BundleConfig::create(ContaoGoogleReviewsWidgetBundle::class)
-        ->setLoadAfter([ContaoCoreBundle::class]),
-    ];
-  }
+    public function getBundles(ParserInterface $parser): array
+    {
+        return [
+            BundleConfig::create(ContaoGoogleReviewsWidgetBundle::class)
+                ->setLoadAfter([ContaoCoreBundle::class]),
+        ];
+    }
 }
