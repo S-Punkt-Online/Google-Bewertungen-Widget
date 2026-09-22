@@ -179,7 +179,7 @@ Used for Schema.org structured data.
 Example:
 
 ```text
-Blue Detect GmbH
+Example Company GmbH
 ```
 
 ---
