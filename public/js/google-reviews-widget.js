@@ -1,4 +1,23 @@
 document.addEventListener('DOMContentLoaded', () => {
+	// Speicherzugriff absichern: localStorage kann fehlen oder Fehler werfen
+	// (Safari Private Mode, blockierte Websitedaten, Quota). Dann wird der
+	// Zustand einfach nicht gespeichert, das Widget funktioniert trotzdem.
+	const readStorage = (key) => {
+		try {
+			return window.localStorage.getItem(key);
+		} catch (e) {
+			return null;
+		}
+	};
+
+	const writeStorage = (key, value) => {
+		try {
+			window.localStorage.setItem(key, value);
+		} catch (e) {
+			// Zustand wird nicht persistiert
+		}
+	};
+
 	document.querySelectorAll('.rsce_google_review').forEach((reviewContent) => {
 		const closeButton = reviewContent.querySelector('.rsce_google_review__close');
 
@@ -11,7 +30,7 @@ document.addEventListener('DOMContentLoaded', () => {
 
 		const updateState = (closed) => {
 			reviewContent.classList.toggle('google_hidden', closed);
-			localStorage.setItem('googleReviewClosed', closed.toString());
+			writeStorage('googleReviewClosed', closed.toString());
 
 			if (closeIcon) {
 				closeIcon.hidden = closed;
@@ -27,7 +46,7 @@ document.addEventListener('DOMContentLoaded', () => {
 			);
 		};
 
-		const isClosed = localStorage.getItem('googleReviewClosed') === 'true';
+		const isClosed = readStorage('googleReviewClosed') === 'true';
 
 		updateState(isClosed);
 
