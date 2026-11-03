@@ -12,6 +12,14 @@ class GoogleReviewsService
 {
     private const REQUEST_TIMEOUT = 5.0;
 
+    private const CACHE_LIFETIME = 86400;
+
+    /**
+     * After a failed request, Google is not asked again for this many seconds, so an
+     * outage or an exhausted quota does not slow down every page view.
+     */
+    private const RETRY_DELAY = 900;
+
     public function __construct(
         private readonly string $cacheDir,
         private readonly LoggerInterface $logger,
@@ -29,26 +37,38 @@ class GoogleReviewsService
         }
 
         $cacheFile = $this->getCacheFile($placeId);
+        $cache = $this->readCache($cacheFile);
+        $now = time();
 
-        $cachedData = $this->getCachedData($cacheFile);
-
-        if (null !== $cachedData) {
-            return $cachedData;
+        if (null !== $cache && null !== $cache['data'] && $now - $cache['timestamp'] <= self::CACHE_LIFETIME) {
+            return $cache['data'];
         }
 
         if ('' === $apiKey) {
             return $this->getEmptyResult();
         }
 
+        // Within the retry delay of a failed request, serve the last known values (or
+        // nothing) instead of asking Google again.
+        if (null !== $cache && null !== $cache['failed_at'] && $now - $cache['failed_at'] < self::RETRY_DELAY) {
+            return $cache['data'] ?? $this->getEmptyResult();
+        }
+
         $apiData = $this->fetchFromGoogle($apiKey, $placeId);
 
         if (null !== $apiData) {
-            $this->saveCache($cacheFile, $apiData);
+            $this->writeCache($cacheFile, ['timestamp' => $now, 'data' => $apiData]);
 
             return $apiData;
         }
 
-        return $this->getEmptyResult();
+        $this->writeCache($cacheFile, [
+            'timestamp' => $cache['timestamp'] ?? 0,
+            'data' => $cache['data'] ?? null,
+            'failed_at' => $now,
+        ]);
+
+        return $cache['data'] ?? $this->getEmptyResult();
     }
 
     private function fetchFromGoogle(string $apiKey, string $placeId): array|null
@@ -73,7 +93,9 @@ class GoogleReviewsService
                 'Failed to fetch reviews from the Google Places API.',
                 [
                     'place_id' => $placeId,
-                    'exception' => $exception->getMessage(),
+                    'exception' => $exception::class,
+                    // Transport errors contain the request URL, including the API key
+                    'message' => str_replace($apiKey, '***', $exception->getMessage()),
                 ],
             );
 
@@ -103,16 +125,15 @@ class GoogleReviewsService
 
     private function getCacheFile(string $placeId): string
     {
-        if (!is_dir($this->cacheDir)) {
-            mkdir($this->cacheDir, 0775, true);
-        }
-
         return $this->cacheDir.'/google_reviews_'.preg_replace('/[^a-zA-Z0-9_-]/', '_', $placeId).'.json';
     }
 
-    private function getCachedData(string $cacheFile): array|null
+    /**
+     * @return array{timestamp: int, data: array|null, failed_at: int|null}|null
+     */
+    private function readCache(string $cacheFile): array|null
     {
-        if (!file_exists($cacheFile)) {
+        if (!is_file($cacheFile)) {
             return null;
         }
 
@@ -122,43 +143,43 @@ class GoogleReviewsService
             return null;
         }
 
-        $data = json_decode($content, true);
+        $cache = json_decode($content, true);
 
-        if (!\is_array($data)) {
+        if (!\is_array($cache) || !isset($cache['timestamp'])) {
             return null;
         }
 
-        if (!isset($data['timestamp'], $data['data'])) {
-            return null;
-        }
-
-        $cacheLifetime = 60 * 60 * 24;
-
-        if (time() - (int) $data['timestamp'] > $cacheLifetime) {
-            return null;
-        }
-
-        if (!\is_array($data['data'])) {
-            return null;
-        }
-
-        return $data['data'];
+        return [
+            'timestamp' => (int) $cache['timestamp'],
+            'data' => $this->isValidData($cache['data'] ?? null) ? $cache['data'] : null,
+            'failed_at' => isset($cache['failed_at']) ? (int) $cache['failed_at'] : null,
+        ];
     }
 
-    private function saveCache(string $cacheFile, array $data): void
+    private function isValidData(mixed $data): bool
     {
-        $json = json_encode(
-            [
-                'timestamp' => time(),
-                'data' => $data,
-            ],
-            JSON_PRETTY_PRINT | JSON_UNESCAPED_UNICODE,
-        );
+        return \is_array($data)
+            && isset($data['formatted_rating'], $data['user_ratings_total'])
+            && \is_string($data['formatted_rating'])
+            && 1 === preg_match('/^\d(\.\d)?$/', $data['formatted_rating'])
+            && \is_int($data['user_ratings_total']);
+    }
+
+    private function writeCache(string $cacheFile, array $cache): void
+    {
+        if (!is_dir($this->cacheDir) && !@mkdir($this->cacheDir, 0775, true) && !is_dir($this->cacheDir)) {
+            $this->logger->warning('Could not create the Google reviews cache directory.', ['directory' => $this->cacheDir]);
+
+            return;
+        }
 
         $tmpFile = $cacheFile.'.'.uniqid('', true).'.tmp';
+        $json = json_encode($cache, JSON_PRETTY_PRINT | JSON_UNESCAPED_UNICODE);
 
-        file_put_contents($tmpFile, $json);
-        rename($tmpFile, $cacheFile);
+        if (false === @file_put_contents($tmpFile, $json) || !@rename($tmpFile, $cacheFile)) {
+            @unlink($tmpFile);
+            $this->logger->warning('Could not write the Google reviews cache file.', ['file' => $cacheFile]);
+        }
     }
 
     private function getEmptyResult(): array

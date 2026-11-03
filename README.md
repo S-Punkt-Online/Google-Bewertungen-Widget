@@ -227,6 +227,11 @@ Benefits:
 - Fewer API requests
 - Lower Google API costs
 
+The rating is refreshed once every 24 hours. If a request to Google fails
+(outage, exhausted quota, invalid key), the last known rating keeps being shown
+and Google is not asked again for 15 minutes. The error is written to the
+Contao system log (without the API key).
+
 ---
 
 # Template Override
