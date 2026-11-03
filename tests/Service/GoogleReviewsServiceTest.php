@@ -209,7 +209,7 @@ final class GoogleReviewsServiceTest extends TestCase
      */
     private function createRecordingLogger(): LoggerInterface
     {
-        return new class() implements LoggerInterface {
+        return new class implements LoggerInterface {
             use LoggerTrait;
 
             public array $records = [];
